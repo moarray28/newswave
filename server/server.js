@@ -14,6 +14,9 @@ app.use(express.json());
 //app.use(cors());
 
 
+
+
+
 app.use(
   cors({
     // origin included of localhost 127.0.0.1
@@ -295,6 +298,13 @@ app.post(
   });
 }
 );
+
+
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Server for newswave is running perfectly!  😊👍' });
+});
+
 
 
 
