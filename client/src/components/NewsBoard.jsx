@@ -9,6 +9,7 @@ const NewsBoard = ({category,show }) => {
   const [loader, setLoader] = useState(true);
   const [visible, setVisible] = useState(false);
   const[location,setLocation]=useState(show? '' :'in');
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [pageSize, setPageSize] =useState(5);
   axios.defaults.withCredentials = true;
@@ -18,7 +19,7 @@ const NewsBoard = ({category,show }) => {
     const userdata = async() =>{
       if(show){
       try{
-        const response = await axios.get(`http://localhost:4515/getprofile`);
+        const response = await axios.get(`${backendUrl}/getprofile`);
         setLocation(response.data.location);
         console.log(response.data.location);
         setPageSize(response.data.pagesize);
@@ -78,7 +79,7 @@ const fetchNews = () => {
 
   //const url = `http://localhost:4515/api/news?location=in&category=technology&pageSize=${(pageSize * 3) + 6}`;
 
-  const url =`http://localhost:4515/api/news?location=us&category=technology&pageSize=5`;
+  const url =`${backendUrl}/api/news?location=us&category=technology&pageSize=5`;
   console.log('Fetching data from URL:', url);
 
   // Make the Axios GET request
@@ -116,7 +117,7 @@ const fetchNews = () => {
     const userdata = async() =>{
       if(show){
       try{
-        const response = await axios.get(`http://localhost:4515/getprofile`);
+        const response = await axios.get(`${backendUrl}/getprofile`);
         setLocation(response.data.location);
         console.log(response.data.location);
         setPageSize(response.data.pagesize);
