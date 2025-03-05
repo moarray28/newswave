@@ -1,4 +1,4 @@
-.login {
+ .login {
         min-height: 460px;
         min-width: 360px;
         max-height: max-content;
@@ -177,11 +177,10 @@
 
 }
 
-.login-register p a:hover {
-        /* Add an underline on hover */
+.login-register p a:hover { 
         transition: ease-in-out;
         color: #ffcc00;
-        /* Change the color when hovering */
+
 }
 
 
@@ -195,7 +194,7 @@
         margin-left: 180px;
         height: 400px;
         width: 400px;
-        /*animation: forgif 3s ease-in-out ; */
+
         box-shadow: 0 8px 54px 0 #0c0e2f93;
 
         -webkit-animation: bounce-in-top 1.5s ease-in-out both;
@@ -324,4 +323,6 @@ input::placeholder {
                 -webkit-animation-timing-function: ease-out;
                 animation-timing-function: ease-out;
         }
-}
+} 
+
+    

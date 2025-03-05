@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 const cookie = require("cookie-parser");
 const cookieParser = require("cookie-parser");
+const axios = require("axios");
 
 const app = express();
 app.use(express.json());
@@ -93,6 +94,35 @@ app.get('/hello', verifyuser, (req, res) => {
     });
   });
   
+  
+
+  //news api 
+
+  app.get('/api/news', async (req, res) => {
+    const { location, category, pageSize } = req.query;
+  
+    // Validate input parameters
+    if (!location || !category || !pageSize) {
+      return res.status(400).json({ error: 'Missing required parameters: location, category, or pageSize' });
+    }
+  
+    try {
+      // Construct the NewsAPI URL with dynamic parameters
+      const url = `https://newsapi.org/v2/top-headlines?country=${location}&category=${category}&pageSize=${(pageSize * 3) + 6}&apiKey=${process.env.NEWS_API_KEY}`;
+      
+      // Fetch data from NewsAPI
+      const response = await axios.get(url);
+      
+       
+      res.json(response.data);
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      res.status(500).send('Error fetching news');
+    }
+  });
+
+
+
   app.get('/getbookmarks',verifyuser, async (req, res) => {
     try {
       const  username  =  req.user.name;

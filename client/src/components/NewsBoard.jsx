@@ -33,21 +33,85 @@ const NewsBoard = ({category,show }) => {
   
   userdata();
   
+  
 
 
   },[]);
 
+
+  
+// const fetchNews = () => {
+//   setLoader(true); // Show loader while fetching data
+
+// //  const url = `http://localhost:4515/api/news?location=${location}&category=${category}&pageSize=${(pageSize * 3) + 6}`; // Dynamic URL with params
+
+//   const url = `http://localhost:4515/api/news?location=in&category=technology&pageSize=${(pageSize * 3) + 6}`; // Dynamic URL with params
+
+
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Slice the articles array based on the desired number of articles (pageSize * 3)
+//       //const desiredArticleCount = pageSize * 3;  // Adjust the number based on your pageSize
+//       //const slicedArticles = data.articles.slice(0, desiredArticleCount); // Slice the array based on pageSize
+      
+//       // Set the sliced articles to state
+//       //setArticles(slicedArticles);
+//       setArticles(data.articles);
+//     })
+//     .catch((error) => {
+//       console.error('Error fetching news:', error);
+//     })
+//     .finally(() => {
+//       // Set loader to false after the fetch operation is complete
+//       setTimeout(() => {
+//         setLoader(false);
+//       }, 1500); // Optional timeout for the loader (you can adjust the time as needed)
+//     });
+// };
+
+
+
+
+const fetchNews = () => {
+  setLoader(true); // Show loader while fetching data
+
+  //const url = `http://localhost:4515/api/news?location=in&category=technology&pageSize=${(pageSize * 3) + 6}`;
+
+  const url =`http://localhost:4515/api/news?location=us&category=technology&pageSize=5`;
+  console.log('Fetching data from URL:', url);
+
+  // Make the Axios GET request
+  axios.get(url)
+    .then((response) => {
+      console.log('Fetched data:', response.data); // Log the data from the server
+
+      // Check if articles exist in the response
+      if (response.data && response.data.articles && response.data.articles.length > 0) {
+        setArticles(response.data.articles); // Set the articles to state
+      } else {
+        console.log('No articles found or empty data returned');
+        setArticles([]); // If no articles, clear the state
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching news:', error);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        setLoader(false); // Hide loader after the request completes
+      }, 1500); // Optional timeout for the loader
+    });
+};
+
+
+  useEffect(() => {
+    fetchNews();
+  }, [category, location, pageSize]);
+
   useEffect(() =>
    {
 
-     //let url ='https://newsapi.org/v2/everything?q=world+news&language=hi&pageSize=15&apiKey=8ee5a885104245319972f63466feaee2';       // everyother news
-      /**
-       * attribute country is not applicable in everything endpoint ,so it will be better to use everthing in the search section of the news
-       * 
-       
-       *   
-       */
-    //let url ="https://newsapi.org/v2/top-headlines?country="+country+"&category="+category+"&pageSize="+pageSize+"&apiKey=8ee5a885104245319972f63466feaee2"; //getting news from india
 
     const userdata = async() =>{
       if(show){
@@ -67,39 +131,9 @@ const NewsBoard = ({category,show }) => {
   
   userdata();
   
-/** Similarly,it will be better to use top-headline section for the country 
-     * top-headline does not allow to select the language even if is selected i have to remove the country attribute from it 
-    */
-
-   // const url =`https://newsapi.org/v2/top-headlines?country=${location}&category=${category}&pageSize=${(pageSize*3)+6}&apiKey=8ee5a885104245319972f63466feaee2`;
-   /** 
-   const url = `https://newsdata.io/api/1/latest?country=${location}&category=${category}&apikey=pub_726990cb19aa30a6fd34ec15b15cc99778e59`;
-
-fetch(url)
-  .then((response) => response.json())
-  //.then((data) => {
-    // Simply slice the articles array based on the desired number of articles
-   // const desiredArticleCount = pageSize * 3;  // Adjust the number based on your pageSize
-    //const slicedArticles = data.articles.slice(0, desiredArticleCount); 
-    
-    // Set the articles to state without any filtering
-    //setArticles(slicedArticles);
-  //.})
-  .then((data) => {
-    setArticles(data.articles);
-  })
-  .catch((error) => console.log(error))
-  .finally(() => {
-    setTimeout(() => {
-      setLoader(false);
-    }, 1500);
-  });
-
-**/
-
     window.addEventListener("scroll", toggleVisibility);
 
-    
+    {/**** 
       const url = `https://newsdata.io/api/1/latest?country=${location}&category=${category}&apikey=`;
     
       fetch(url)
@@ -121,8 +155,16 @@ fetch(url)
      // Run this effect when category or location changes
     
     
-    
+ */}
+
+     //new approach : 
+
+
+
+      
+      
   }, [category,location]);
+
 
   // Function to scroll the window to the top
   const scrollToTop = () => {
@@ -152,9 +194,8 @@ fetch(url)
         ) : (
             <div>
 
-               {/***  for newssapi.org
-                * 
-                * <div className="newscard mx-3">
+               
+               <div className="newscard mx-3">
             {articles.map((news, i) => {
               return (
                 <NewsItem
@@ -171,9 +212,15 @@ fetch(url)
             })}
           </div>
           
-                * 
-                */}
 
+                {
+
+
+              /*** 
+               * 
+               * using data.io 
+               * 
+               * 
 <div className="newscard mx-3">
             {articles.map((news, i) => {
               return (
@@ -191,6 +238,10 @@ fetch(url)
             })}
           </div>
           
+
+               * 
+               * 
+              */}
 
           </div>
         )}
