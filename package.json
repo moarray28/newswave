@@ -1,5 +1,17 @@
 {
-  "dependencies": {
-    "dotenv": "^16.4.5"
-  }
+  "name": "newswave",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  
+    "install-server": "cd server && npm install",
+    "start-server": "cd server && node server.js",
+    "install-client": "cd client && npm install",
+    "build-client": "cd client && npm run build",
+    "start-client": "cd client && npm run dev"
+    },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
