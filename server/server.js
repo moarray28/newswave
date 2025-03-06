@@ -29,6 +29,7 @@ app.use(
 app.use(cookieParser());
 
 const userModel = require("./DummySchema");
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.MONGO).then(console.log("db connected"));
 
 
